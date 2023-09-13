@@ -1,0 +1,7 @@
+<style> .impaire{color:white;
+background-color:black}
+.paire{color:white; background-color:red }</style>
+
+{% for number in numbers %}
+<p>Tirage au sort <span class="{% if number % 2 %} impaire {% else %} paire {% endif %}">{{number}}</span></p>
+{% endfor %}
