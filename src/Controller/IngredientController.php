@@ -15,7 +15,17 @@ class IngredientController extends AbstractController
     public function index(IngredientRepository $repository): Response
     {
         $ingredients = $repository->findAll();
-        dd($ingredients);
+        // dd($ingredients);    
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient_greater_than', name: 'app_ingredient_greater_than')]
+    public function index_only_greater_than_100(IngredientRepository $repository): Response
+    {
+        $ingredients = $repository->findAllGreaterThanPrice(100);
+        // dd($ingredients);    
         return $this->render('ingredient/index.html.twig', [
             'ingredients' => $ingredients,
         ]);

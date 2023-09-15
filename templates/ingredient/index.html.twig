@@ -1,4 +1,18 @@
-<ul> 
-{% for ingredient in ingredients %}
-    <li> {{ingredient}}</li>
-</ul>
+
+<table>
+    <tr>
+        <td>N°</td>
+        <td>Nom</td>
+        <td>Prix</td>
+        <td>Date de création</td>
+    </tr>
+    {% for ingredient in ingredients %}
+
+    <tr> 
+    <td>{{loop.index}} </td>
+    <td>{{ ingredient.nom }} </td>
+    <td>{{ingredient.prix}} </td>
+    <td>{{ingredient.createdAt|date("m/d/Y")}} </td>
+    </tr>
+     {% endfor %} 
+</table>

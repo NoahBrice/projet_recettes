@@ -30,7 +30,7 @@ class Ingredient
         notInRangeMessage: 'You must be between {{ min }}euros and {{ max }}euros tall to enter',
     )]
     #[ORM\Column]
-    private ?int $prix = null;
+    private ?float $prix = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -74,5 +74,9 @@ class Ingredient
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+    public function __construct(){
+
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 }

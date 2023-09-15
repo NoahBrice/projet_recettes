@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Ingredients;
+use App\Entity\Ingredient;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -13,9 +13,9 @@ class AppFixtures extends Fixture
     {
         $faker_factory = Factory::create('fr_FR');
         for ($i = 0; $i < 20; $i++) {
-            $ingredient = new Ingredients();
+            $ingredient = new Ingredient();
             $ingredient->setNom( $faker_factory->word());
-            $ingredient->setPrix(mt_rand(10, 100));
+            $ingredient->setPrix($faker_factory->randomFloat(2,10,200));
             $manager->persist($ingredient);
             $manager->flush($ingredient);
         }
