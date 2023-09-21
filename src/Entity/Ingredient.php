@@ -31,6 +31,7 @@ class Ingredient
     )]
     #[ORM\Column]
     private ?float $prix = null;
+   
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
