@@ -102,10 +102,24 @@ class IngredientController extends AbstractController
 
         $crea_form = $this->createForm(IngredientType::class);
 
-        return $this->render('ingredient/create_2.html.twig', [
-            'crea_form' => $crea_form->createView(),
-        ]);
 
+        $crea_form->handleRequest($request);
 
+        if ($crea_form->isSubmitted() && $crea_form->isValid()) {
+            // if ($crea_form->isSubmitted()) {
+            $data = $crea_form->getData();
+            // dd($data);
+            $ingredient = new Ingredient();
+            $ingredient->setNom($data->getNom());
+            $ingredient->setPrix($data->getPrix());
+            $entity_manager->persist($ingredient);
+            $entity_manager->flush($ingredient);
+            $this->addFlash('success', 'Votre ingrédient ' . $data->getNom() . 'a bien été créé avec succès !');
+            return $this->redirectToRoute('app_ingredient');
+        } else {
+            return $this->render('ingredient/create_2.html.twig', [
+                'crea_form' => $crea_form->createView(),
+            ]);
+        }
     }
 }

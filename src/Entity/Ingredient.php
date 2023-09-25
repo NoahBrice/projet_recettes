@@ -17,7 +17,7 @@ class Ingredient
 
     #[Assert\Length(
         min: 2,
-        max: 50,
+        max: 25,
         minMessage: 'Le nom doit faire au moins {{limit}} caractères',
         maxMessage: 'Le nom ne peut pas faire plus de {{limit}} caractères',
     )]
@@ -27,11 +27,11 @@ class Ingredient
     #[Assert\Range(
         min: 0,
         max: 200,
-        notInRangeMessage: 'You must be between {{ min }}euros and {{ max }}euros tall to enter',
+        notInRangeMessage: 'You must be between {{ min }} euros and {{ max }} euros tall to enter',
     )]
     #[ORM\Column]
     private ?float $prix = null;
-   
+
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -76,7 +76,8 @@ class Ingredient
 
         return $this;
     }
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->setCreatedAt(new \DateTimeImmutable());
     }

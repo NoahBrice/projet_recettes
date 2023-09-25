@@ -1,5 +1,25 @@
-{{ form_start(crea_form) }}
-{{form_row(crea_form.nom, { 'value': 'poivre' })}}
-{{form_row(crea_form.prix, { 'value': '10' })}}
-{{form_row(crea_form.save)}}
-{{ form_end(crea_form) }}
+{% extends 'ingredient/index.html.twig' %}
+{% block body %}
+
+	<style>
+		.erreur {
+			color: red;
+		}
+	</style>
+	{{ form_start(crea_form) }}
+
+
+	<div class="row">
+		<div class="col">
+			{{ form_row(crea_form.nom) }}
+		</div>
+		<div class="col" id="some-custom-id">
+
+			{{ form_label(crea_form.prix) }}
+			{{ form_widget(crea_form.prix) }}
+			<p class="erreur">{% for error  in field_errors(crea_form.prix) %} {{ error}} {% endfor %}</p>
+			
+		</div>
+	</div>
+	{{ form_end(crea_form) }}
+{% endblock %}

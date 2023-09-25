@@ -6,6 +6,7 @@ use App\Entity\Ingredient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class IngredientType extends AbstractType
 {
@@ -14,8 +15,7 @@ class IngredientType extends AbstractType
         $builder
             ->add('nom')
             ->add('prix')
-            ->add('createdAt')
-        ;
+            ->add('sauvegarder', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
