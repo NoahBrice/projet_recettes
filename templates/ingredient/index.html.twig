@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<table>
+	<table class="table">
 		<tr>
-			<td>N°</td>
-			<td>Nom</td>
-			<td>Prix</td>
-			<td>Date de création</td>
+			<th scope="col">N°</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Prix</th>
+			<th scope="col">Date de création</th>
+			<th scope="col">Modifier</th>
+			<th scope="col">Supprimer</th>
 		</tr>
 		{% for message in app.flashes('success') %}
 			<div class="alert alert-success">
@@ -22,6 +24,17 @@
 				<td>{{ingredient.prix}}
 				</td>
 				<td>{{ingredient.createdAt|date("m/d/Y")}}
+				</td>
+				<td>
+					<a href="{{ path('ingredient.edit', {id: ingredient.id},) }}">
+						Modifier
+					</a>
+				</td>
+				<td>
+					<form action="{{ path('ingredient.destroy', {id: ingredient.id},) }}">
+						<input type="hidden" name="_method" value="DELETE">
+						<button type="submit" class="btn btn-danger">Supprimer</button>
+					</form>
 				</td>
 			</tr>
 		{% endfor %}

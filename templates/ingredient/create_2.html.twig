@@ -17,6 +17,7 @@
 
 			{{ form_label(crea_form.prix) }}
 			{{ form_widget(crea_form.prix) }}
+			{{ form_help(crea_form.prix) }}
 			<p class="erreur">{% for error  in field_errors(crea_form.prix) %} {{ error}} {% endfor %}</p>
 			
 		</div>
