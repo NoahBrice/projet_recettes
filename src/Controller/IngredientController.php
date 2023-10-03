@@ -213,4 +213,71 @@ class IngredientController extends AbstractController
         $this->addFlash('success', 'Votre ingrédient ' . $nom . ' a bien été supprimé avec succès !');
         return $this->redirectToRoute('app_ingredient');
     }
+
+    #[Route('/ingredient/find_test', name: 'app_ingredient_find_test')] // Création d'une route 
+    public function find_test(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient("test");
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/find_test_20', name: 'app_ingredient_find_test_20')] // Création d'une route 
+    public function find_test_20(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_nom_prix("test", 20);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/find_testLike_20', name: 'app_ingredient_find_testLike_20')] // Création d'une route 
+    public function find_testLike_20(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_nomLike_prix("test", 20);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/find_by/{prix}', name: 'app_ingredient_find_by_prix')] // Création d'une route 
+    public function find_by_prix(IngredientRepository $repository, int $prix): Response
+    {
+
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_by_prix($prix);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/find_by/{prix}/by_nom/{nom}', name: 'app_ingredient_find_by_prix_and_name')] // Création d'une route 
+    public function find_by_prix_and_name(IngredientRepository $repository, int $prix, string $nom): Response
+    {
+
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_by_prix_and_name($prix, $nom);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
 }

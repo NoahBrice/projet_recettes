@@ -1,5 +1,16 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+	<style>
+		img {
+			width: 50px;
+			height: 50px;
+		}
+	</style>
+	<img src="{{asset('images/logo.png')}}" alt="logo">
+	<a href="{{ path('ingredient.create_store_V3') }}">
+		<button type="button" class="btn btn-primary">Créer un ingrédient</button>
+	</a>
+
 	<table class="table">
 		<tr>
 			<th scope="col">N°</th>
@@ -39,4 +50,6 @@
 			</tr>
 		{% endfor %}
 	</table>
+
+	<script src="{{asset('js/script_index.js')}}"></script>
 {% endblock %}

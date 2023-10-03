@@ -38,6 +38,62 @@ class IngredientRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function find_ingredient(string $nom): array
+    {
+
+        return $this->createQueryBuilder("ingredient")
+            ->where("ingredient.nom = :nom")
+            ->setParameter('nom', $nom)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function find_ingredient_nom_prix(string $nom, int $prix): array
+    {
+
+        return $this->createQueryBuilder("ingredient")
+            ->where("ingredient.nom = :nom")
+            ->setParameter('nom', $nom)
+            ->andWhere("ingredient.prix = :prix")
+            ->setParameter('prix', $prix)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function find_ingredient_nomLike_prix(string $nom, int $prix): array
+    {
+
+        return $this->createQueryBuilder("ingredient")
+            ->where("ingredient.nom LIKE :nom")
+            ->setParameter('nom', '%' . $nom . '%')
+            ->andWhere("ingredient.prix = :prix")
+            ->setParameter('prix', $prix)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function find_ingredient_by_prix(int $prix): array
+    {
+
+        return $this->createQueryBuilder("ingredient")
+            ->where("ingredient.prix = :prix")
+            ->setParameter('prix', $prix)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function find_ingredient_by_prix_and_name(int $prix, string $nom): array
+    {
+
+        return $this->createQueryBuilder("ingredient")
+            ->where("ingredient.prix = :prix")
+            ->setParameter('prix', $prix)
+            ->andWhere("ingredient.prix = :nom")
+            ->setParameter('nom', $nom)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    public function findByExampleField($value): array
     //    {
     //        return $this->createQueryBuilder('i')
