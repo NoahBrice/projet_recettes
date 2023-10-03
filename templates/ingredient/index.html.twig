@@ -26,13 +26,16 @@
 			</div>
 		{% endfor %}
 		{% for ingredient in ingredients %}
+			{% if ingredient.nom == "toto" %}
+				{{dump(ingredient)}}
+			{% endif %}
 
 			<tr>
 				<td>{{loop.index}}
 				</td>
 				<td>{{ ingredient.nom }}
 				</td>
-				<td>{{ingredient.prix}}
+				<td>{{ingredient.prix | number_format(2)}}
 				</td>
 				<td>{{ingredient.createdAt|date("m/d/Y")}}
 				</td>

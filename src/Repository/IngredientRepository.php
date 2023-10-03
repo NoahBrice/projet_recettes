@@ -88,7 +88,7 @@ class IngredientRepository extends ServiceEntityRepository
         return $this->createQueryBuilder("ingredient")
             ->where("ingredient.prix = :prix")
             ->setParameter('prix', $prix)
-            ->andWhere("ingredient.prix = :nom")
+            ->andWhere("ingredient.nom = :nom")
             ->setParameter('nom', $nom)
             ->getQuery()
             ->getResult();

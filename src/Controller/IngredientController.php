@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ingredient;
+use App\Form\IngredientFormType;
 use App\Repository\IngredientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -155,12 +156,16 @@ class IngredientController extends AbstractController
     {
         $ingredient = new Ingredient();
 
-        $crea_form = $this->createForm(IngredientType_V3::class, $ingredient, ['submit label' => 'Créer l\'ingrédient']);
+        $crea_form = $this->createForm(IngredientFormType::class, $ingredient, ['submit label' => 'Créer l\'ingrédient']);
 
 
         $crea_form->handleRequest($request);
 
+        // if ($crea_form->isSubmitted()) {
+        //     $data = $crea_form->getData();
+        //     dd($data);}
         if ($crea_form->isSubmitted() && $crea_form->isValid()) {
+
             // if ($crea_form->isSubmitted()) {
             $data = $crea_form->getData();
             // dd($data);
