@@ -219,7 +219,11 @@ class IngredientController extends AbstractController
         return $this->redirectToRoute('app_ingredient');
     }
 
-    #[Route('/ingredient/find_test', name: 'app_ingredient_find_test')] // Création d'une route 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Méthode Query Builder 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #[Route('/ingredient/find_test', name: 'app_ingredient_find_test', methods: ['GET'])] // Création d'une route 
     public function find_test(IngredientRepository $repository): Response
     {
         //récupération des ingrédient grâce au repository
@@ -232,7 +236,7 @@ class IngredientController extends AbstractController
         ]);
     }
 
-    #[Route('/ingredient/find_test_20', name: 'app_ingredient_find_test_20')] // Création d'une route 
+    #[Route('/ingredient/find_test_20', name: 'app_ingredient_find_test_20', methods: ['GET'])] // Création d'une route 
     public function find_test_20(IngredientRepository $repository): Response
     {
         //récupération des ingrédient grâce au repository
@@ -245,7 +249,7 @@ class IngredientController extends AbstractController
         ]);
     }
 
-    #[Route('/ingredient/find_testLike_20', name: 'app_ingredient_find_testLike_20')] // Création d'une route 
+    #[Route('/ingredient/find_testLike_20', name: 'app_ingredient_find_testLike_20', methods: ['GET'])] // Création d'une route 
     public function find_testLike_20(IngredientRepository $repository): Response
     {
         //récupération des ingrédient grâce au repository
@@ -258,7 +262,7 @@ class IngredientController extends AbstractController
         ]);
     }
 
-    #[Route('/ingredient/find_by/{prix}', name: 'app_ingredient_find_by_prix')] // Création d'une route 
+    #[Route('/ingredient/find_by/{prix}', name: 'app_ingredient_find_by_prix', methods: ['GET'])] // Création d'une route 
     public function find_by_prix(IngredientRepository $repository, int $prix): Response
     {
 
@@ -272,7 +276,7 @@ class IngredientController extends AbstractController
         ]);
     }
 
-    #[Route('/ingredient/find_by/{prix}/by_nom/{nom}', name: 'app_ingredient_find_by_prix_and_name')] // Création d'une route 
+    #[Route('/ingredient/find_by/{prix}/by_nom/{nom}', name: 'app_ingredient_find_by_prix_and_name', methods: ['GET'])] // Création d'une route 
     public function find_by_prix_and_name(IngredientRepository $repository, int $prix, string $nom): Response
     {
 
@@ -280,6 +284,76 @@ class IngredientController extends AbstractController
         $ingredients = $repository->find_ingredient_by_prix_and_name($prix, $nom);
         // dd($ingredients);    
 
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Méthode SQL 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #[Route('/ingredient/index_sql', name: 'app_ingredient_index_sql', methods: ['GET'])] // Création d'une route 
+    public function index_sql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_all_sql();
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index_sql.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+
+
+    #[Route('/ingredient/find_nom_sql/{nom}', name: 'app_ingredient_find_nom_sql', methods: ['GET'])] // Création d'une route 
+    public function find_nom_sql(IngredientRepository $repository, string $nom): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_sql($nom);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index_sql.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/find_test_10_sql', name: 'app_ingredient_find_test_10_sql', methods: ['GET'])] // Création d'une route 
+    public function find_test_10_sql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_nom_prix_sql("test", 10);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index_sql.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/find_testLike_10_sql', name: 'app_ingredient_find_testLike_10_sql', methods: ['GET'])] // Création d'une route 
+    public function find_testLike_10_sql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_nomLike_prix_sql("test", 10);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index_sql.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Méthode DQL
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #[Route('/ingredient/index_dql', name: 'app_ingredient_index_dql', methods: ['GET'])] // Création d'une route 
+    public function index_dql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_all_dql();
+        // dd($ingredients);    
         // Renvoie de la vue index/ingrédient
         return $this->render('ingredient/index.html.twig', [
             'ingredients' => $ingredients,

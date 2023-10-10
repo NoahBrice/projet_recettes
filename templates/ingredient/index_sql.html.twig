@@ -37,7 +37,7 @@
 				</td>
 				<td>{{ingredient.prix | number_format(2)}}
 				</td>
-				<td>{{ingredient.createdAt|date("m/d/Y")}}
+				<td>{{ingredient.created_at|date("m/d/Y")}}
 				</td>
 				<td>
 					<a href="{{ path('ingredient.edit', {id: ingredient.id},) }}">

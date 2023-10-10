@@ -29,7 +29,6 @@ class IngredientType_V3 extends AbstractType
         $resolver->setDefaults([
             'data_class' => Ingredient::class,
             'submit label' => null,
-
         ]);
     }
 }
