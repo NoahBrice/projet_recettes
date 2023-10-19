@@ -345,6 +345,19 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    #[Route('/ingredient/index_ingredient_by_price_sql', name: 'app_index_ingredient_by_price_sql', methods: ['GET'])] // Création d'une route 
+    public function index_ingredient_by_price_sql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_nomLike_prix_sql("test", 10);
+        // dd($ingredients);    
+
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index_sql.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Méthode DQL
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -353,6 +366,69 @@ class IngredientController extends AbstractController
     {
         //récupération des ingrédient grâce au repository
         $ingredients = $repository->find_all_dql();
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+
+
+    #[Route('/ingredient/index_ingredient_test_dql', name: 'app_index_ingredient_test_dql', methods: ['GET'])] // Création d'une route 
+    public function index_ingredient_test_dql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_test_dql();
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/index_ingredient_test_15_dql', name: 'app_index_ingredient_test_15_dql', methods: ['GET'])] // Création d'une route 
+    public function index_ingredient_test_15_dql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_test_10_dql();
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+
+    #[Route('/ingredient/index_ingredient_tes_dql', name: 'app_index_ingredient_tes_dql', methods: ['GET'])] // Création d'une route 
+    public function index_ingredient_tes_dql(IngredientRepository $repository): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_tes_dql();
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/index_ingredient_by_price_dql/{prix}', name: 'app_index_ingredient_by_price_dql', methods: ['GET'])] // Création d'une route 
+    public function index_ingredient_by_price_dql(IngredientRepository $repository, $prix): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_by_price_dql($prix);
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/index_ingredient_by_price_and_name_dql/{prix}/{nom}', name: 'app_index_ingredient_by_price_and_name_dql', methods: ['GET'])] // Création d'une route 
+    public function index_ingredient_by_price_and_name_dql(IngredientRepository $repository, $prix, $nom): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_by_price_and_name_dql($prix, $nom);
         // dd($ingredients);    
         // Renvoie de la vue index/ingrédient
         return $this->render('ingredient/index.html.twig', [

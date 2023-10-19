@@ -178,11 +178,6 @@ class IngredientRepository extends ServiceEntityRepository
         // dd($resultSet->fetchAllAssociative());
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
-        return $this->createQueryBuilder("ingredient")
-            ->where("ingredient.prix = :prix")
-            ->setParameter('prix', $prix)
-            ->getQuery()
-            ->getResult();
     }
 
     public function find_ingredient_by_prix_and_name_sql(int $prix, string $nom): array
@@ -206,6 +201,67 @@ class IngredientRepository extends ServiceEntityRepository
             'SELECT ing
         FROM App\entity\Ingredient ing'
         );
+        return $query->getResult();
+    }
+
+    function find_ingredient_test_dql()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.nom = :nom'
+        )->setParameter('nom', 'test');
+        return $query->getResult();
+    }
+
+    function find_ingredient_test_10_dql()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.nom = :nom
+        AND ing.prix = :prix'
+        )->setParameter('nom', 'test')
+            ->setParameter('prix', '15');
+        return $query->getResult();
+    }
+
+
+    function find_ingredient_tes_dql()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.nom like :nom'
+        )->setParameter('nom', '%' . 'tes' . '%');
+        return $query->getResult();
+    }
+
+
+    function find_ingredient_by_price_dql($prix)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.prix = :prix'
+        )->setParameter('prix', $prix);
+        return $query->getResult();
+    }
+
+    function find_ingredient_by_price_and_name_dql($prix, $nom)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.prix = :prix
+        and  ing.nom = :nom'
+        )->setParameter('prix', $prix)
+            ->setParameter('nom', $nom);
         return $query->getResult();
     }
 
