@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 class Recette
@@ -31,9 +34,19 @@ class Recette
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[Assert\Range(
+        min: 0,
+        max: 500,
+        notInRangeMessage: 'You must be between {{ min }} euros and {{ max }} euros tall to enter',
+    )]
     #[ORM\Column]
     private ?float $prix = null;
 
+    #[Assert\Range(
+        min: 0,
+        max: 5,
+        notInRangeMessage: 'You must be between {{ min }} euros and {{ max }} euros tall to enter',
+    )]
     #[ORM\Column]
     private ?int $difficulte = null;
 
@@ -42,8 +55,11 @@ class Recette
 
     public function __construct()
     {
+        $this->setCreatedAt(new \DateTimeImmutable());
+        $this->setUpdatedAt(new \DateTimeImmutable());
         $this->ingredient = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -133,6 +149,8 @@ class Recette
 
         return $this;
     }
+
+    
 
     /**
      * @return Collection<int, Ingredient>
