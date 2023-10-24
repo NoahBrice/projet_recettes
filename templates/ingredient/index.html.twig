@@ -7,9 +7,18 @@
 		}
 	</style>
 	<img src="{{asset('images/logo.png')}}" alt="logo">
+	{% if app.user %}
+		<div class="mb-3">
+			You are logged
+
+			<a href="{{ path('app_logout') }}">Se déconnecter ( {{ app.user.userIdentifier }} )</a>
+		</div>
+	{% endif %}
+
 	<a href="{{ path('ingredient.create_store_V3') }}">
 		<button type="button" class="btn btn-primary">Créer un ingrédient</button>
 	</a>
+
 
 	<table class="table">
 		<tr>

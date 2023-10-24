@@ -1,20 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecetteController!{% endblock %}
+{% block title %}Hello RecetteController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style></style>
+	<a href="{{ path('recette.create_store') }}">
+		<button type="button" class="btn btn-primary">Créer une recette</button>
+	</a>
+	<table class="table">
+		<tr>
+			<th>Id</th>
+			<th>Nom</th>
+			<th>Temps</th>
+			<th>Description</th>
+			<th>prix</th>
+			<th>Difficulté</th>
+			<th>ingrédients</th>
+		</tr>
+		<tr>
+			{% for recette in recettes %}
+				<td>{{recette.id}}</td>
+				<td>{{recette.nom}}</td>
+				<td>{{recette.temps}}</td>
+				<td>{{recette.Description}}</td>
+				<td>{{recette.prix}}</td>
+				<td>{{recette.difficulte}}</td>
+				<td>
+					{% for ingredient in recette.ingredient %}
+						{{ingredient.nom}},
+					{% endfor %}
+				</td>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+			</tr>
+		{% endfor %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Cours/Annee 3/Back-end/projet_recettes/src/Controller/RecetteController.php'|file_link(0) }}">src/Controller/RecetteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Cours/Annee 3/Back-end/projet_recettes/templates/recette/index.html.twig'|file_link(0) }}">templates/recette/index.html.twig</a></code></li>
-    </ul>
-</div>
+	</table>
+
 {% endblock %}
