@@ -11,7 +11,9 @@
 		<div class="mb-3">
 			You are logged
 
-			<a href="{{ path('app_logout') }}">Se déconnecter ( {{ app.user.userIdentifier }} )</a>
+			<a href="{{ path('app_logout') }}">Se déconnecter (
+				{{ app.user.userIdentifier }}
+				)</a>
 		</div>
 	{% endif %}
 
@@ -26,6 +28,7 @@
 			<th scope="col">Nom</th>
 			<th scope="col">Prix</th>
 			<th scope="col">Date de création</th>
+			<th scope="col">Dernière modification</th>
 			<th scope="col">Modifier</th>
 			<th scope="col">Supprimer</th>
 		</tr>
@@ -46,7 +49,9 @@
 				</td>
 				<td>{{ingredient.prix | number_format(2)}}
 				</td>
-				<td>{{ingredient.createdAt|date("m/d/Y")}}
+				<td>{{ingredient.createdAt|date("m/d/Y H:m")}}
+				</td>
+				<td>{{ingredient.updatedAt|date("m/d/Y H:m")}}
 				</td>
 				<td>
 					<a href="{{ path('ingredient.edit', {id: ingredient.id},) }}">

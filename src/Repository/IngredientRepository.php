@@ -124,6 +124,7 @@ class IngredientRepository extends ServiceEntityRepository
         FROM ingredient ing
         WHERE ing.nom = :nom 
         ';
+        
         $resultSet = $conn->executeQuery($sql, ['nom' => $nom]);
         // dd($resultSet->fetchAllAssociative());
         // returns an array of arrays (i.e. a raw data set)

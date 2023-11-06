@@ -38,8 +38,8 @@ class RecetteController extends AbstractController
 
             $data = $crea_form->getData();
             // dd($data);
-            $recette->setNom($data->getNom());
-            $recette->setPrix($data->getPrix());
+            // $recette->setNom($data->getNom());
+            // $recette->setPrix($data->getPrix());
             $entity_manager->persist($recette);
             $entity_manager->flush($recette);
             $this->addFlash('success', 'Votre ingrédient ' . $data->getNom() . ' a bien été créé avec succès !');

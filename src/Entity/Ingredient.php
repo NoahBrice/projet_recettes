@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
 {
@@ -40,6 +42,24 @@ class Ingredient
 
     #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'ingredient')]
     private Collection $recettes;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+        $this->setUpdatedAt(new \DateTimeImmutable());
+        // $this->setSlug(slug($this->nom));
+        // $slugger->slug($this->nom);
+        $this->recettes = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -81,12 +101,7 @@ class Ingredient
 
         return $this;
     }
-    public function __construct()
-    {
 
-        $this->setCreatedAt(new \DateTimeImmutable());
-        $this->recettes = new ArrayCollection();
-    }
 
     /**
      * @return Collection<int, Recette>
@@ -111,6 +126,30 @@ class Ingredient
         if ($this->recettes->removeElement($recette)) {
             $recette->removeIngredient($this);
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

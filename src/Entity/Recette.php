@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 class Recette
 {
@@ -55,11 +56,16 @@ class Recette
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTimeImmutable());
+        // $this->setCreatedAt(new \DateTimeImmutable());
         $this->setUpdatedAt(new \DateTimeImmutable());
         $this->ingredient = new ArrayCollection();
     }
-
+    
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
