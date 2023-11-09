@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Ingredient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 
 /**
  * @extends ServiceEntityRepository<Ingredient>
@@ -16,9 +17,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class IngredientRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,  private LoggerInterface $logger)
     {
-        parent::__construct($registry, Ingredient::class);
+        parent::__construct($registry, Ingredient::class,);
     }
 
     //    /**
@@ -124,7 +125,7 @@ class IngredientRepository extends ServiceEntityRepository
         FROM ingredient ing
         WHERE ing.nom = :nom 
         ';
-        
+
         $resultSet = $conn->executeQuery($sql, ['nom' => $nom]);
         // dd($resultSet->fetchAllAssociative());
         // returns an array of arrays (i.e. a raw data set)
@@ -263,6 +264,29 @@ class IngredientRepository extends ServiceEntityRepository
         and  ing.nom = :nom'
         )->setParameter('prix', $prix)
             ->setParameter('nom', $nom);
+        return $query->getResult();
+    }
+
+
+    function find_ingredient_by_slug($slug)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.slug = :slug'
+        )->setParameter('slug', $slug);
+        return $query->getResult();
+    }
+
+    function find_ingredient_show($id)    {
+        $this->logger->info('APPEL DE find_ingredient_show');
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT ing
+        FROM App\entity\Ingredient ing
+        WHERE ing.id = :id'
+        )->setParameter('id', $id);
         return $query->getResult();
     }
 

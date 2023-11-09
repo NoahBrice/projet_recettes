@@ -54,8 +54,6 @@ class Ingredient
     {
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->setUpdatedAt(new \DateTimeImmutable());
-        // $this->setSlug(slug($this->nom));
-        // $slugger->slug($this->nom);
         $this->recettes = new ArrayCollection();
     }
 

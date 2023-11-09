@@ -15,12 +15,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\IngredientType;
 use App\Form\IngredientType_V3;
+use Psr\Log\LoggerInterface;
 
 class IngredientController extends AbstractController
 {
     #[Route('/ingredient', name: 'app_ingredient')] // Création d'une route 
-    public function index(IngredientRepository $repository): Response
+    public function index(IngredientRepository $repository, LoggerInterface $logger): Response
     {
+        $logger->info('AFFICHAGE DE TOUS LES INGREDIENTS');
+        
         //récupération des ingrédient grâce au repository
         $ingredients = $repository->findAll();
         // dd($ingredients);    
@@ -432,6 +435,30 @@ class IngredientController extends AbstractController
         // dd($ingredients);    
         // Renvoie de la vue index/ingrédient
         return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/by_slug/{slug}', name: 'app_index_ingredient_by_slug', methods: ['GET'])] // Création d'une route 
+    public function show_by_slug(IngredientRepository $repository, $slug): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_by_slug($slug);
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/show.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
+    #[Route('/ingredient/{id}', name: 'app_index_ingredient_show', methods: ['GET'])] // Création d'une route 
+    public function show(IngredientRepository $repository, $id): Response
+    {
+        //récupération des ingrédient grâce au repository
+        $ingredients = $repository->find_ingredient_show($id);
+        // dd($ingredients);    
+        // Renvoie de la vue index/ingrédient
+        return $this->render('ingredient/show.html.twig', [
             'ingredients' => $ingredients,
         ]);
     }

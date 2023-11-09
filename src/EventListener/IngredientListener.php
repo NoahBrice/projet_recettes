@@ -22,10 +22,22 @@ use App\Entity\Ingredient;
 // use Doctrine\ORM\Mapping\PreUpdate;
 
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: Ingredient::class)]
+#[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Ingredient::class)]
 class IngredientListener
 {
+
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
     public function preUpdate(Ingredient $ingredient, LifecycleEventArgs $event)
     {
         $ingredient->setUpdatedAt(new \DateTimeImmutable());
+        $ingredient->setSlug($this->slugger->slug($ingredient->getNom()));
+
+    }
+
+    public function  prePersist(Ingredient $ingredient, LifecycleEventArgs $event)
+    {
+        $ingredient->setSlug($this->slugger->slug($ingredient->getNom()));
     }
 }
