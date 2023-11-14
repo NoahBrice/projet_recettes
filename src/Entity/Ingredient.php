@@ -9,7 +9,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Odm\Filter\RangeFilter;
 
+#[ApiResource(
+    normalizationContext: [
+        'groups' => ['ingredient:read'],
+    ],
+    denormalizationContext: [
+        'groups' => ['ingredient:write']
+        ]
+)]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
@@ -25,6 +38,8 @@ class Ingredient
         minMessage: 'Le nom doit faire au moins {{limit}} caractères',
         maxMessage: 'Le nom ne peut pas faire plus de {{limit}} caractères',
     )]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
+    #[Groups(['ingredient:read'])]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
@@ -33,6 +48,8 @@ class Ingredient
         max: 200,
         notInRangeMessage: 'You must be between {{ min }} euros and {{ max }} euros tall to enter',
     )]
+    #[ApiFilter(RangeFilter::class)]
+    #[Groups(['ingredient:write', 'ingredient:read'])]
     #[ORM\Column]
     private ?float $prix = null;
 

@@ -15,6 +15,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Service\SendMailService;
+
 
 class ProjetRecetteAuthenticatorTestAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -22,7 +24,7 @@ class ProjetRecetteAuthenticatorTestAuthenticator extends AbstractLoginFormAuthe
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private SendMailService $mailer, private Security $security)
     {
     }
 
@@ -44,7 +46,12 @@ class ProjetRecetteAuthenticatorTestAuthenticator extends AbstractLoginFormAuthe
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-
+        $this->mailer->dire_bonjour(
+            $this->security->getUser(),
+            'no-reply@monsite.net',
+            'Titre de mon message',
+            'connexion_find'
+        );
         // if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
         //     return new RedirectResponse($targetPath);
         // }
