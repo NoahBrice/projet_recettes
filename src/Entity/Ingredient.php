@@ -21,8 +21,9 @@ use ApiPlatform\Doctrine\Odm\Filter\RangeFilter;
     ],
     denormalizationContext: [
         'groups' => ['ingredient:write']
-        ]
+    ]
 )]
+// #[ApiFilter(RangeFilter::class, properties: ['prix'])]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
@@ -43,14 +44,14 @@ class Ingredient
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\Column]
     #[Assert\Range(
         min: 0,
         max: 200,
         notInRangeMessage: 'You must be between {{ min }} euros and {{ max }} euros tall to enter',
     )]
-    #[ApiFilter(RangeFilter::class)]
     #[Groups(['ingredient:write', 'ingredient:read'])]
-    #[ORM\Column]
+    #[ApiFilter(RangeFilter::class, properties: ['prix'])]
     private ?float $prix = null;
 
 
