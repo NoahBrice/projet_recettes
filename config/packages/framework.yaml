@@ -1,5 +1,19 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    http_client:
+        scoped_clients:
+            example_api:
+                base_uri: 'https://freefakeapi.io/authapi'
+
+                auth_bearer: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1pa2UucGF5bmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDA1Njg2OTEsImV4cCI6MTcwMDU3MjI5MX0.GnMxBFTIkQWWOj6m4mkGOsYmXQaHt7BckqYmbf07nUI'
+                # HTTP Basic authentication
+                # auth_basic: 'the-username:the-password'
+
+                # HTTP Bearer authentication (also called token authentication)
+
+                # Microsoft NTLM authentication
+                # auth_ntlm: 'the-username:the-password'
+
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
     http_method_override: true
