@@ -70,6 +70,11 @@ class Recette
         $this->setUpdatedAt(new \DateTimeImmutable());
         $this->ingredient = new ArrayCollection();
     }
+
+    public function __tostring()
+    {
+        return $this->nom;
+    }
     
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
