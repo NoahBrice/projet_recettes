@@ -75,7 +75,11 @@ class Ingredient
         $this->recettes = new ArrayCollection();
     }
 
-
+    public function __tostring()
+    {
+        return $this->nom;
+    }
+    
 
     public function getId(): ?int
     {
